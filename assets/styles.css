@@ -20,6 +20,9 @@ body{
 .desktop{
     display: none;
 }
+.product-card{
+    width: 28%;
+}
 /* tablet */
 @media (min-width: 560px){
     .mobile{

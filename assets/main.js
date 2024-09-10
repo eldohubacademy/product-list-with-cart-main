@@ -109,7 +109,7 @@ const products = [
      }
 ]
 
-const cart = []
+let cart = []
 //  show all products in the page
 
 const ourProductsDiv = document.querySelector("#products-list")
@@ -117,20 +117,66 @@ const ourProductsDiv = document.querySelector("#products-list")
 function showProducts(arr){
     arr.forEach(product=>{
         const newDiv = document.createElement("div")
+        newDiv.classList.add("product-card")
         newDiv.innerHTML = `
             <img class="mobile" src="${product.image.mobile}" alt="${product.name}" >
             <img class="tablet" src="${product.image.tablet}" alt="${product.name}" >
             <img class="desktop" src="${product.image.desktop}" alt="${product.name}" >
             <div>
-                <button>Add To Cart</button>
+                <button class="add-to-cart" id="btn-${product.id}"  >Add To Cart</button>
             </div>
             <p> ${product.category} </p>
             <h3>${product.name}</h3>
-            <p> ${product.price} <p>
+            <p> KSH. ${new Intl.NumberFormat().format(product.price * 128)} </p>
         `
         ourProductsDiv.append(newDiv)
     })
 }
 showProducts(products)
 
+const addToCartButtons = document.querySelectorAll(".add-to-cart")
 
+addToCartButtons.forEach(btn=>{
+    btn.addEventListener("click", (e)=>{
+            // console.log(e.target.id.split("-")[1] );
+            // console.log(e.target.getAttribute("id"));
+            const clickedProductId = e.target.id.split("-")[1]
+            const clickedProduct = products.find(p=>p.id==clickedProductId)
+            clickedProduct.count = 1
+            if(!cart.some(p=>p.id==clickedProductId)){
+                cart.push(clickedProduct)
+            }
+            console.log(cart);
+            showCart(cart)
+            
+    })
+})
+
+const ourCartDiv = document.querySelector(".cart-list")
+function showCart(arr){
+    ourCartDiv.innerHTML = "" // Clear cardDiv everytime you render cart list
+    arr.forEach(product=>{
+        const newDiv = document.createElement("div")
+        newDiv.classList.add("cart-item")
+        newDiv.innerHTML = `
+            <div>
+                <p> ${product.name} </p>
+                <span class="item-count">${product.count}x<span>
+                <span class="item-price"> ${new Intl.NumberFormat().format(product.price * 128)} <span>
+                <span class="item-total"> ${new Intl.NumberFormat().format(product.count *product.price * 128)} <span>
+            </div>
+            <button class="remove-from-cart" id="remove-${product.id}"> x </button>
+        `
+        ourCartDiv.append(newDiv)
+    })
+}
+
+function removeFromCart(id){
+    cart = cart.filter(p=>p.id!==id) 
+    showCart(cart)
+}
+
+
+// look into  data attribute
+
+// try remove item from cart using remove-from-cart button
