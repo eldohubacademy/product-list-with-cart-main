@@ -122,7 +122,7 @@ function showProducts(arr){
             <img class="mobile" src="${product.image.mobile}" alt="${product.name}" >
             <img class="tablet" src="${product.image.tablet}" alt="${product.name}" >
             <img class="desktop" src="${product.image.desktop}" alt="${product.name}" >
-            <div>
+            <div class="action-box">
                 <button class="add-to-cart" id="btn-${product.id}"  >Add To Cart</button>
             </div>
             <p> ${product.category} </p>
@@ -146,8 +146,8 @@ addToCartButtons.forEach(btn=>{
             if(!cart.some(p=>p.id==clickedProductId)){
                 cart.push(clickedProduct)
             }
-            console.log(cart);
             showCart(cart)
+            changeButtonToCounter(e.target.parentElement, clickedProductId) // div -action box
             
     })
 })
@@ -169,13 +169,47 @@ function showCart(arr){
         `
         ourCartDiv.append(newDiv)
     })
+    const removeFromCartButtons = document.querySelectorAll(".remove-from-cart")
+    removeFromCartButtons.forEach(btn=>{       
+        btn.addEventListener("click", (e)=>{
+            let productToBeRemovedId = e.target.id.split("-")[1]
+            cart = cart.filter(p=>p.id!=productToBeRemovedId) 
+            showCart(cart)
+        })
+    })
 }
 
-function removeFromCart(id){
-    cart = cart.filter(p=>p.id!==id) 
-    showCart(cart)
+
+function changeButtonToCounter(element, id){
+    console.log(element);    
+    element.innerHTML = ` 
+        <button class="decrease" id="decrease-${id}"> - </button>
+        <span class="cartcount" id="cartcount-${id}"> 1 </span>
+        <button class="increase" id="increase-${id}" > + </button>
+    `
+    document.getElementById(`decrease-${id}`).addEventListener("click", ()=>{
+        let theProduct = cart.find(p=>p.id==id )
+        theProduct.count = theProduct.count - 1
+        document.getElementById(`cartcount-${id}`).textContent = theProduct.count
+        cart = cart.filter(p=>p.id!=id) 
+        cart.push(theProduct)
+        showCart(cart)
+    })
+    document.getElementById(`increase-${id}`).addEventListener("click", ()=>{
+        let theProduct = cart.find(p=>p.id==id )
+        theProduct.count = theProduct.count + 1
+        document.getElementById(`cartcount-${id}`).textContent = theProduct.count
+        cart = cart.filter(p=>p.id!=id) 
+        cart.push(theProduct)
+        showCart(cart)
+    })
 }
-// rb
+
+
+
+
+
+
 
 // look into  data attribute
 
