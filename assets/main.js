@@ -175,7 +175,7 @@ function removeFromCart(id){
     cart = cart.filter(p=>p.id!==id) 
     showCart(cart)
 }
-
+// rb
 
 // look into  data attribute
 
