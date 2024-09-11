@@ -40,6 +40,11 @@ body{
     width: 20px;
     border-color: grey;
 }
+.action-box{
+    display: flex;
+    justify-content: space-between;
+    
+}
 /* tablet */
 @media (min-width: 560px){
     .mobile{
