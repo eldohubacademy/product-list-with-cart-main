@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <p>hello</p>
+    </header>
+    
+    <main class="one">
+        <div class="box">
+            box here
+            <p id="p">paragraph</p>
+        </div>
+    </main>
+
+   
+    <script>
+        // querySelector, getElementByID, by classname, by tag --- traverse the dom top downwards/ parent to child
+        // const mainEl = document.querySelector(".one")
+        // const myPara = mainEl.querySelector("p") // first paragraph of the document
+        // myPara.textContent = "ALBERT KIPCHIRCHIR"  
+        
+        // 
+
+
+        const thePara = document.getElementById("p")
+        console.log( thePara.closest("html")  );
+        
+    </script>
+</body>
+</html>

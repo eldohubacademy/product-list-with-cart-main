@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netflix FAQ</title>
-    <link rel="stylesheet" href="netflixFAQ.css">
     <style>
         /* styles.css */
 
@@ -35,7 +34,7 @@ main {
 }
 
 .faq-container {
-    
+    /* grid  --- */
 }
 
 .faq-item {
@@ -67,7 +66,7 @@ main {
 }
 
 .faq-header::after {
-    content: attr(data-symbol);
+    content: attr(data-symbol); /*  data-   + -  */
     position: absolute;
     top: 50%;
     right: 20px;
@@ -147,8 +146,6 @@ faqItems.forEach(item => {
 
 document.querySelectorAll('.faq-header').forEach(header => {
     header.addEventListener('click', () => {
-
-        
         const item = header.closest('.faq-item');
         if(item.classList.contains("expanded")){
             item.classList.remove('expanded');
@@ -163,10 +160,10 @@ document.querySelectorAll('.faq-header').forEach(header => {
 });
 
 function closeAnyOpenAnswer(){
-    document.querySelectorAll(".faq-item").forEach(header=>{
-        if(header.classList.contains("expanded")){
-            header.classList.remove("expanded")
-             header.querySelector(".faq-header").setAttribute("data-symbol", "+")
+    document.querySelectorAll(".faq-item").forEach(item=>{
+        if(item.classList.contains("expanded")){
+            item.classList.remove("expanded")
+             item.querySelector(".faq-header").setAttribute("data-symbol", "+")
         }
     })
 }
