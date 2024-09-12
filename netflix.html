@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix FAQ</title>
+    <link rel="stylesheet" href="netflixFAQ.css">
+    <style>
+        /* styles.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+    background-color: #000;
+    color: #fff;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.faq-container {
+    
+}
+
+.faq-item {
+    background-color: #fff;
+   
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin: 20px 0px;
+}
+
+.faq-item.expanded {
+    transform: translateY(-10px);
+}
+
+.faq-item.expanded .faq-header,
+.faq-item.expanded .faq-content {
+    opacity: 1;
+    padding: 15px;
+    height: auto;
+}
+
+.faq-header {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background-color: aliceblue;
+    padding: 15px;
+}
+
+.faq-header::after {
+    content: attr(data-symbol);
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #007bff;
+    transition: transform 0.3s ease;
+}
+
+.faq-content {
+   
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.faq-content p {
+    margin-top: 10px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Netflix FAQ</h1>
+    </header>
+
+    <main>
+        <div class="faq-container">
+            <h1>Frequently Asked questions</h1>
+            <h2>What is Netflix?</h2>
+            <p>Netflix is a streaming service that offers a wide variet of award-winnig TV shows,
+                movies,anime,documentaries,and more on thousands of internet-connected devices.
+                <br>You can watch as much as you want without a single commercial-
+                all for one monthly price.There's always something new to discover and new TV
+                shows and movies are added every week
+            </p>
+            <p>How much does Netflix cost</p>
+            <!-- FAQ items will be dynamically added here -->
+        </div>
+    </main>
+
+    <script >
+        // script.js
+
+const faqContainer = document.querySelector('.faq-container');
+
+function createFaqItem(title, description) {
+    const item = document.createElement('div');
+    item.className = 'faq-item';
+
+    const header = document.createElement('div');
+    header.className = 'faq-header';
+    header.textContent = title;
+    header.setAttribute("data-symbol", "+")
+
+    const content = document.createElement('div');
+    content.className = 'faq-content';
+    content.innerHTML = `<p>${description}</p>`;
+
+    item.appendChild(header);
+    item.appendChild(content);
+
+    return item;
+}
+
+const faqItems = [
+    { title: "How do I cancel my subscription?", description: "To cancel your subscription, go to Account & Help > Cancel Membership." },
+    { title: "What devices can I watch Netflix on?", description: "You can watch Netflix on smart TVs, smartphones, tablets, streaming media players, and game consoles." },
+    { title: "Is Netflix available worldwide?", description: "Yes, Netflix is available in over 190 countries worldwide." },
+    { title: "Can I share my account with family members?", description: "No, Netflix accounts cannot be shared between households." }
+];
+
+faqItems.forEach(item => {
+    faqContainer.appendChild(createFaqItem(item.title, item.description));
+});
+
+document.querySelectorAll('.faq-header').forEach(header => {
+    header.addEventListener('click', () => {
+
+        
+        const item = header.closest('.faq-item');
+        if(item.classList.contains("expanded")){
+            item.classList.remove('expanded');
+            header.setAttribute("data-symbol",   '+' )
+        }else{
+            closeAnyOpenAnswer()
+            item.classList.add('expanded');
+            header.setAttribute("data-symbol", '-' )
+        }
+       
+    });
+});
+
+function closeAnyOpenAnswer(){
+    document.querySelectorAll(".faq-item").forEach(header=>{
+        if(header.classList.contains("expanded")){
+            header.classList.remove("expanded")
+             header.querySelector(".faq-header").setAttribute("data-symbol", "+")
+        }
+    })
+}
+    </script>
+</body>
+</html>
